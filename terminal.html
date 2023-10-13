@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* CSS Styles */
+        /* Body styling */
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Terminal Button */
+        .terminal-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #00ff00;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* Terminal Popup */
+        .terminal-popup {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 400px;
+            height: 300px;
+            background-color: #000;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        /* Terminal Header */
+        .terminal-header {
+            background-color: #111;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .terminal-button-close {
+            float: right;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        /* Terminal Content */
+        .terminal-content {
+            padding: 10px;
+            max-height: 230px;
+            overflow-y: scroll;
+            background-color: #000;
+        }
+
+        /* Terminal Input */
+        .terminal-input-container {
+            background-color: transparent;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .terminal-prompt {
+            color: #00ff00;
+            margin-right: 5px;
+        }
+
+        .terminal-input {
+            background-color: transparent;
+            color: #00ff00;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+
+        /* Terminal Output Styles */
+        .terminal-output {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        /* Command List Styles */
+        .terminal-content ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .terminal-content li {
+            padding: 5px 0;
+        }
+
+        /* Cursor Blinking Animation */
+        @keyframes cursor-blink {
+            0%, 100% {
+                border-right: 2px solid transparent;
+            }
+            50% {
+                border-right: 2px solid #00ff00;
+            }
+        }
+
+        /* Apply cursor blink animation to the input */
+        .terminal-input:focus {
+            animation: cursor-blink 0.8s infinite;
+        }
+    </style>
+    <title>Portfolio</title>
+</head>
+<body>
+    <!-- Your website content goes here -->
+
+    <!-- Terminal Button -->
+    <button class="terminal-button" id="openTerminalButton">Open Terminal</button>
+
+    <!-- Terminal Popup -->
+    <div class="terminal-popup" id="terminalPopup">
+        <div class="terminal-header">
+            <span class="terminal-button-close" id="closeButton">&times;</span>
+            Terminal
+        </div>
+        <div class="terminal-content">
+            <p>Welcome to My Portfolio Terminal</p>
+            <p>Type one of the following commands:</p>
+            <ul>
+                <li>home - Go to the Home page</li>
+                <li>about - Go to the About Me page</li>
+                <li>portfolio - Go to the Portfolio page</li>
+                <li>contact - Go to the Contact page</li>
+                <li>blog - Go to the Blog page</li>
+                <li>clear - Clear the terminal</li>
+                <li>help - Display this help message</li>
+            </ul>
+        </div>
+        <div class="terminal-input-container">
+            <span class="terminal-prompt">$</span>
+            <input class="terminal-input" id="terminalInput" type="text" autofocus>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const terminalPopup = document.getElementById("terminalPopup");
+            const closeButton = document.getElementById("closeButton");
+            const terminalInput = document.getElementById("terminalInput");
+            const terminalContent = document.querySelector(".terminal-content");
+            const openTerminalButton = document.getElementById("openTerminalButton");
+
+            // Function to open the terminal popup
+            function openTerminal() {
+                terminalPopup.style.display = "block";
+            }
+
+            // Function to close the terminal popup
+            function closeTerminal() {
+                terminalPopup.style.display = "none";
+            }
+
+            // Event listeners
+            closeButton.addEventListener("click", closeTerminal);
+            openTerminalButton.addEventListener("click", openTerminal);
+
+            // Function to handle user input
+            function handleCommand(command) {
+                switch (command.toLowerCase()) {
+                    case "home":
+                        // Redirect to the Home page
+                        window.location.href = "home.html";
+                        break;
+                    case "about":
+                        // Redirect to the About Me page
+                        window.location.href = "about.html";
+                        break;
+                    case "portfolio":
+                        // Redirect to the Portfolio page
+                        window.location.href = "portfolio.html";
+                        break;
+                    case "contact":
+                        // Redirect to the Contact page
+                        window.location.href = "contact.html";
+                        break;
+                    case "blog":
+                        // Redirect to the Blog page
+                        window.location.href = "blog.html";
+                        break;
+                    case "clear":
+                        // Clear the terminal content
+                        terminalContent.innerHTML = "";
+                        break;
+                    case "help":
+                        // Display the help message
+                        terminalContent.innerHTML += `
+                            <p>Type one of the following commands:</p>
+                            <ul>
+                                <li>home - Go to the Home page</li>
+                                <li>about - Go to the About Me page</li>
+                                <li>portfolio - Go to the Portfolio page</li>
+                                <li>contact - Go to the Contact page</li>
+                                <li>blog - Go to the Blog page</li>
+                                <li>clear - Clear the terminal</li>
+                                <li>help - Display this help message</li>
+                            </ul>`;
+                        break;
+                    default:
+                        // Display an error message for invalid commands
+                        terminalContent.innerHTML += `<p>Invalid command: ${command}. Type "help" for a list of commands.</p>`;
+                }
+                // Clear the input field
+                terminalInput.value = "";
+            }
+
+            // Listen for user input
+            terminalInput.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    const input = terminalInput.value;
+                    terminalContent.innerHTML += `<p><span class="terminal-output">$</span> ${input}</p>`;
+                    handleCommand(input);
+                }
+            });
+
+            // Open the terminal when the page loads (you can remove this if not needed)
+            openTerminal();
+        });
+    </script>
+</body>
+</html>
